@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JADE DABON </title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700&display=swap');
+
+  body {
+    font-family: 'Share Tech Mono', monospace;
+    background: #0a0a0a;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    overflow: hidden;
+    color: #fff;
+  }
+
+  /* Binary hacker rain background */
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -2;
+  }
+
+  /* Card container */
+  .vip-card {
+    width: 500px;
+    height: 300px;
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(10, 10, 10, 0.9);
+    box-shadow: 0 0 20px rgba(255,0,0,0.8), 
+                0 0 60px rgba(255,0,0,0.5), 
+                inset 0 0 30px rgba(255,0,0,0.2);
+    animation: floating 6s ease-in-out infinite;
+    border: 2px solid rgba(255,0,0,0.8);
+  }
+
+  @keyframes floating {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Rainbow hacker neon text */
+  .rainbow-text {
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, violet, red);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 6s linear infinite, glitch 2s infinite;
+    position: relative;
+  }
+
+  @keyframes rainbow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Glitch hacker effect */
+  @keyframes glitch {
+    0% { text-shadow: 2px 2px 5px rgba(255,0,0,0.8); }
+    20% { text-shadow: -2px -2px 5px rgba(0,255,255,0.8); }
+    40% { text-shadow: 2px -2px 6px rgba(255,0,255,0.8); }
+    60% { text-shadow: -2px 2px 6px rgba(255,255,0,0.8); }
+    80% { text-shadow: 3px 0 8px rgba(255,0,0,0.9); }
+    100% { text-shadow: 0px 0px 6px rgba(255,0,0,1); }
+  }
+
+  /* Header */
+  .vip-header {
+    position: absolute;
+    top: 16px;
+    left: 24px;
+    right: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+
+  .card-number {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* Photo */
+  .photo-section {
+    position: absolute;
+    left: 30px;
+    top: 70px;
+    width: 120px;
+    height: 123px;
+    border: 2px solid rgba(255,0,0,0.9);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #111;
+    box-shadow: 0 0 20px rgba(255,0,0,0.7);
+  }
+
+  .photo-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Info */
+  .member-info {
+    position: absolute;
+    top: 80px;
+    left: 170px;
+    right: 30px;
+  }
+
+  .member-name {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .member-details {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Status bar */
+  .status-bar {
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    right: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .vip-status, .validity {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* Typing effect */
+  .typing {
+    display: inline-block;
+    white-space: pre-line;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+
+<!-- Binary Background -->
+<canvas id="matrix"></canvas>
+
+<div class="vip-card">
+  <div class="vip-header">
+    <div class="rainbow-text typing" data-text=" PROFILE INFORMATION"></div>
+    <div class="card-number rainbow-text typing" data-text="ID: 2025-VIP-7891"></div>
+  </div>
+
+  <div class="photo-section">
+    <img src="aivan.jpg" alt="Profile Photo">
+  </div>
+
+  <div class="member-info">
+    <div class="member-name rainbow-text typing" data-text=" SARTZ AIVAN"></div>
+    <div class="member-details rainbow-text typing" data-text="BORN: MARCH,28,2009
+AGE: 16
+SEX: MALE
+ADDRESS:BICAO,CARMEN,BOHOL">"</div>
+  </div>
+
+  <div class="status-bar">
+    <div class="vip-status rainbow-text typing" data-text="I T DATA INFORMATION"></div>
+    <div class="validity rainbow-text typing" data-text="VALID THRU: 12/30"></div>
+  </div>
+</div>
+
+<script>
+/* Binary Matrix Rain Effect */
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const binary = "01";
+const font_size = 14;
+const columns = canvas.width / font_size;
+let drops = [];
+
+for(let x = 0; x < columns; x++)
+  drops[x] = 1;
+
+function draw() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#ff0000"; // red hacker rain
+  ctx.font = font_size + "px monospace";
+
+  for(let i = 0; i < drops.length; i++) {
+    let text = binary[Math.floor(Math.random() * binary.length)];
+    ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+    if(drops[i] * font_size > canvas.height && Math.random() > 0.975)
+      drops[i] = 0;
+
+    drops[i]++;
+  }
+}
+setInterval(draw, 33);
+
+/* Typing effect script */
+function typeEffect(element, text, speed) {
+  let i = 0;
+  element.textContent = "";
+  function typing() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+  typing();
+}
+
+window.onload = function() {
+  document.querySelectorAll(".typing").forEach(el => {
+    typeEffect(el, el.getAttribute("data-text"), 40);
+  });
+};
+</script>
+
+</body>
+</html>
